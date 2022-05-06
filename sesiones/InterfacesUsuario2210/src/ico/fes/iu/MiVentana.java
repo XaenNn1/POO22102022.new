@@ -10,14 +10,17 @@ import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.awt.Label;
 import java.awt.TextField;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
  * @author abner
  */
-public class MiVentana extends Frame implements MouseListener{
+public class MiVentana extends Frame{
     private Button boton1; 
     private FlowLayout layout;
     private TextField cuadroTexto;
@@ -26,7 +29,7 @@ public class MiVentana extends Frame implements MouseListener{
     
     
     public MiVentana() throws HeadlessException {
-        setTitle("Mi Ventana");
+        setTitle("Mi Ventana V2");
         setSize(300, 200); // TAMAÑO EN PIXELES
         layout = new FlowLayout();
         setLayout(layout);
@@ -34,8 +37,37 @@ public class MiVentana extends Frame implements MouseListener{
         cuadroTexto = new TextField(15);
         etiqueta = new Label("Valor Inicial");
         
-        this.boton1.addMouseListener(this);
-        
+        this.boton1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 etiqueta.setText("Hola "+ cuadroTexto.getText());
+                 System.out.println("X=" + e.getX());
+                  System.out.println("Y=" + e.getY());
+                  System.out.println("Que boton ?"+ e.getButton());
+                  
+            }
+            
+        });
+       this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+            
+        });
+       /*
+           this.cuadroTexto.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                System.out.println("Enter code:"+KeyEvent.VK_ENTER);
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        System.out.println("Se dió enter");
+                        break;
+                    default:
+                       System.out.println("Tecla:" + e.getKeyChar());    
+                }
+       */
         this.add(cuadroTexto);
         this.add(boton1);
         this.add(etiqueta);
@@ -43,32 +75,7 @@ public class MiVentana extends Frame implements MouseListener{
         setVisible(true);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println("CLICK");
-       // System.out.println(cuadroTexto.getText());
-       etiqueta.setText("Hola "+ cuadroTexto.getText());
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("Presionado");
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        System.out.println("Liberado");
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("Entro");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-         System.out.println("Salio");
-    }
+                
     
     
 }
